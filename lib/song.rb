@@ -46,4 +46,31 @@ class Song
   def self.alphabetical
     @@all.sort_by {|song| song.name}
   end
+
+  def self.split_filename(filename)
+    split_filename = filename.split(" - ")
+    split_filename[1].slice!(".mp3")
+    split_filename
+  end
+
+  def self.new_from_filename(filename)
+    split_filename = split_filename(filename)
+    song = Song.new
+    song.name = split_filename[1]
+    song.artist_name = split_filename[0]
+    song
+  end
+
+  def self.create_from_filename(filename)
+    split_filename = split_filename(filename)
+    song = Song.new
+    song.name = split_filename[1]
+    song.artist_name = split_filename[0]
+    @@all << song
+    song
+  end
+
+    def self.destroy_all
+      @@all.clear
+    end
 end
